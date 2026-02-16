@@ -1,5 +1,8 @@
 // jest.setup.js
 // configure environment variables before tests run
-process.env.NODE_ENV = 'test'
-// use in-memory SQLite database for tests
-process.env.TEST_DATABASE_URL = 'file:./test.db?mode=memory&cache=shared'
+require('dotenv').config();
+process.env.NODE_ENV = 'test';
+// ensure DATABASE_URL is loaded (jest doesn't automatically load .env)
+if (!process.env.DATABASE_URL) {
+  console.warn('WARNING: DATABASE_URL not defined in environment');
+}

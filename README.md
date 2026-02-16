@@ -35,7 +35,13 @@ A full-stack task management application with a Node/Express + Prisma backend an
    npm run dev
    ```
 5. Run tests:
+
+   The backend tests require a running PostgreSQL database pointed to by
+   `DATABASE_URL`. You can either start the database manually or use Docker
+   Compose (see the **Docker** section below).
+
    ```bash
+   # make sure your container or local DB is running first
    npm run test
    ```
 
