@@ -1,12 +1,15 @@
-import { TaskFilters as TaskFiltersType } from '../types'
-import { Search } from 'lucide-react'
+import { TaskFilters as TaskFiltersType } from '../types';
+import { Search } from 'lucide-react';
 
 interface TaskFiltersProps {
-  filters: TaskFiltersType
-  onFilterChange: (filters: TaskFiltersType) => void
+  filters: TaskFiltersType;
+  onFilterChange: (filters: TaskFiltersType) => void;
 }
 
-export default function TaskFilters({ filters, onFilterChange }: TaskFiltersProps) {
+export default function TaskFilters({
+  filters,
+  onFilterChange,
+}: TaskFiltersProps) {
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm border mb-6">
       <div className="flex flex-col sm:flex-row gap-4">
@@ -16,20 +19,27 @@ export default function TaskFilters({ filters, onFilterChange }: TaskFiltersProp
             type="text"
             placeholder="Buscar tarefas..."
             value={filters.search || ''}
-            onChange={(e) => onFilterChange({ ...filters, search: e.target.value })}
+            onChange={(e) =>
+              onFilterChange({ ...filters, search: e.target.value })
+            }
             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        
+
         <div className="flex gap-3 items-center">
-          <label className="sr-only" htmlFor="statusFilter">Status</label>
+          <label className="sr-only" htmlFor="statusFilter">
+            Status
+          </label>
           <select
             id="statusFilter"
             value={filters.status || ''}
-            onChange={(e) => onFilterChange({ 
-              ...filters, 
-              status: e.target.value as TaskFiltersType['status'] || undefined 
-            })}
+            onChange={(e) =>
+              onFilterChange({
+                ...filters,
+                status:
+                  (e.target.value as TaskFiltersType['status']) || undefined,
+              })
+            }
             className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
           >
             <option value="">Todos status</option>
@@ -38,14 +48,19 @@ export default function TaskFilters({ filters, onFilterChange }: TaskFiltersProp
             <option value="DONE">Concluídas</option>
           </select>
 
-          <label className="sr-only" htmlFor="priorityFilter">Prioridade</label>
+          <label className="sr-only" htmlFor="priorityFilter">
+            Prioridade
+          </label>
           <select
             id="priorityFilter"
             value={filters.priority || ''}
-            onChange={(e) => onFilterChange({ 
-              ...filters, 
-              priority: e.target.value as TaskFiltersType['priority'] || undefined 
-            })}
+            onChange={(e) =>
+              onFilterChange({
+                ...filters,
+                priority:
+                  (e.target.value as TaskFiltersType['priority']) || undefined,
+              })
+            }
             className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
           >
             <option value="">Todas prioridades</option>
@@ -54,14 +69,18 @@ export default function TaskFilters({ filters, onFilterChange }: TaskFiltersProp
             <option value="HIGH">Alta</option>
           </select>
 
-          <label className="sr-only" htmlFor="sortFilter">Ordenar</label>
+          <label className="sr-only" htmlFor="sortFilter">
+            Ordenar
+          </label>
           <select
             id="sortFilter"
             value={filters.sort || ''}
-            onChange={(e) => onFilterChange({
-              ...filters,
-              sort: e.target.value || undefined
-            })}
+            onChange={(e) =>
+              onFilterChange({
+                ...filters,
+                sort: (e.target.value as TaskFiltersType['sort']) || undefined,
+              })
+            }
             className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
           >
             <option value="">Ordenar</option>
@@ -80,5 +99,5 @@ export default function TaskFilters({ filters, onFilterChange }: TaskFiltersProp
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -2,22 +2,27 @@ import { createContext, useState, useEffect, type ReactNode } from 'react';
 import type { User, AuthContextType } from '../types';
 import { authService } from '../services/auth';
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined,
+);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      authService.getProfile()
-        .then(user => setUser(user))
-        .catch(() => localStorage.removeItem('token'))
-        .finally(() => setLoading(false));
-    } else {
+    (async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const profile = await authService.getProfile();
+          setUser(profile);
+        } catch {
+          localStorage.removeItem('token');
+        }
+      }
       setLoading(false);
-    }
+    })();
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -32,11 +37,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(user);
   };
 
-  const updateProfile = async (payload: { name?: string; password?: string }) => {
-    const user = await authService.updateProfile(payload)
-    setUser(user)
-    return user
-  }
+  const updateProfile = async (payload: {
+    name?: string;
+    password?: string;
+  }) => {
+    const user = await authService.updateProfile(payload);
+    setUser(user);
+    return user;
+  };
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -44,7 +52,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, updateProfile, loading }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, register, updateProfile, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );

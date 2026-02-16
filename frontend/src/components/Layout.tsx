@@ -1,11 +1,11 @@
-import { Outlet, Link } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
-import { ClipboardList, LogOut, User } from 'lucide-react'
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { Outlet, Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import { ClipboardList, LogOut, User } from 'lucide-react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Layout() {
-  const { user, logout } = useAuth()
+  const { user, logout } = useAuth();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -14,13 +14,20 @@ export default function Layout() {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <ClipboardList className="h-8 w-8 text-blue-600 mr-3" />
-              <span className="text-xl font-bold text-gray-900">Task Manager</span>
+              <span className="text-xl font-bold text-gray-900">
+                Task Manager
+              </span>
             </div>
-            
+
             <div className="flex items-center space-x-4">
               <div className="flex items-center text-gray-700 space-x-2">
                 <User className="h-5 w-5" />
-                <Link to="/profile" className="text-sm font-medium hover:underline">{user?.name}</Link>
+                <Link
+                  to="/profile"
+                  className="text-sm font-medium hover:underline"
+                >
+                  {user?.name}
+                </Link>
               </div>
               <button
                 onClick={logout}
@@ -39,5 +46,5 @@ export default function Layout() {
       </main>
       <ToastContainer position="top-right" newestOnTop closeOnClick />
     </div>
-  )
+  );
 }
